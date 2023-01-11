@@ -44,16 +44,35 @@
       </section>
       <main class="fondoMenu">
             <div class="d-flex input-group align-items-center p-2 justify-content-around" role="search">
-              <div id="checkBox"><!-- seccion checkbox  -->
+              <div><!-- seccion caja chekeados -->
+                  <label v-if="cajaCheckeo" v-for="categoria of cajaCheckeo" class="form-check form-check-inline">
+                  <input class="form-check-input" @change="filtroCruzado" v-model="entradaChekeado" type="checkbox" :value="categoria">
+                  {{categoria}}</label>
               </div>
               <div class="d-flex">
-                <input class="form-control me-2" id="buscar" type="search" placeholder="Search" aria-label="Search">
+                <input class="form-control me-2" @input="filtroCruzado" v-model="entradaDeBusqueda" type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success p-1 d-flex align-items-center bg-dark" type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                   <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
                 </svg></button>
               </div>
             </div>
-            <div class="row w-100 justify-content-around p-2 m-0 " id="cardsHome"><!-- seccion cards  -->
+            <div class="row w-100 justify-content-around p-2 m-0 "><!-- seccion todos los eventos  -->
+              <div v-if="imprimirEventos" v-for="evento of imprimirEventos" class="card col-6 mb-3 p-1" style="width: 12rem;">
+                <img :src="evento.image" class="card-img-top" :alt="evento.name">
+                <div class="card-body p-0 text-center d-flex flex-column justify-content-between">
+                  <div>
+                    <h5 class="card-title m-0 pt-2">{{evento.name}}</h5>
+                    <p class="card-text m-0 pt-2 pb-2">{{evento.description}}</p>
+                  </div>
+                  <div class="d-flex justify-content-around align-items-center">
+                    <p class="m-0">Price ${{evento.price}}</p>
+                    <a :href="'./details.html?id=' + evento._id" class="btn btn-primary p-1">See more</a>
+                  </div>
+                </div>
+              </div>
+              <template v-else>
+                <h3  class="text-center mt-4">No Matches Found</h3>
+              </template>
             </div>
       </main> 
       <footer class="d-flex justify-content-between align-items-center navbar-dark bg-dark ">
