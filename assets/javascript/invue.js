@@ -7,6 +7,7 @@ createApp({
             cajaCheckeo:undefined,
             entradaDeBusqueda:"",
             entradaChekeado:[],
+            eventoFiltrado:[],
         }
     },
     created(){
@@ -22,6 +23,10 @@ createApp({
             this.eventos=datos.events;
             this.imprimirEventos=this.eventos;
             this.cajaCheckeo=[...new Set(this.eventos.map(evento=>evento.category))];
+            let cadenaUrl = location.search;//lee la url actual para seccion mas detalles
+            let parametro = new URLSearchParams(cadenaUrl); 
+            let id = parametro.get("id");
+            this.eventoFiltrado=datos.events.find(evento=>evento._id==id);
         })
         .catch(err=>console.log(err));
     },
